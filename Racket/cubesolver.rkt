@@ -8,8 +8,8 @@
 ;Assuming a blue front yellow top for the cube
 
 (define solvedcube (make-cube (make-edge 2 4) (make-edge 2 6) (make-edge 2 3) (make-edge 2 5) (make-edge 4 6) (make-edge 3 6) (make-edge 3 5) (make-edge 4 5) (make-edge 1 3)
-                              (make-edge 1 6) (make-edge 1 4) (make-edge 1 5) (make-corner 2 4 6) (make-corner 2 5 4) (make-corner 2 3 5) (make-corner 2 6 3)
-                              (make-corner 1 3 6) (make-corner 1 5 3) (make-corner 1 4 5) (make-corner 1 6 4) ""))
+                              (make-edge 1 6) (make-edge 1 4) (make-edge 1 5) (make-corner 2 4 6) (make-corner 2 4 5) (make-corner 2 3 6) (make-corner 2 3 5)
+                              (make-corner 1 3 6) (make-corner 1 3 5) (make-corner 1 4 6) (make-corner 1 4 5) ""))
 
 
 ;Color code
@@ -25,8 +25,9 @@
 ;Edges 1-12 start at the top back, go ccw around the layer, move down to equtor, start at back left and go ccw, then go to the bottom layer and start at the DF edge and
 ;go ccw
                                          
-; URF Corners on the top layer have sticker1 starting on the top, then going ccw, sticker2 front, and sticker3
-; DLF Corners on the bottom layer have sticker1 on the bottom, going ccw, sticker2 front, and then sticker3 left
+; Corners have sticker1 that is the sticker on the top | bottom face
+; Corners have sticker2 that is the sticker on the front | back face
+; Corners have sticker3 that is the sticker on the left | right face
 
 ;Top layer edges have sticker1 on top and sticker2 on front
 ;Front equator egdes have sticker1 front and sticker2 left | right
@@ -35,6 +36,18 @@
 
 ;Piece = Corner | Edge
 
+
+
+;R
+;Cube->Cube
+;Does a R move
+;!!!
+(define (R cube)
+  (make-cube (cube-e1 cube) (cube-e2 cube) (cube-e3 cube) (cube-e7 cube) (cube-e5 cube) (cube-e6 cube) (cube-e12 cube) (cube-e4 cube) (cube-e9 cube) (cube-e10 cube) (cube-e11 cube)
+             (cube-e8 cube) (cube-c1 cube) (make-corner (corner-sticker2 (cube-c4 cube)) (corner-sticker1 (cube-c4 cube)) (corner-sticker3 (cube-c4 cube)))
+             (cube-c3 cube) (make-corner (corner-sticker2 (cube-c6 cube)) (corner-sticker1 (cube-c6 cube)) (corner-sticker3 (cube-c6 cube))) (cube-c5 cube)
+             (make-corner (corner-sticker2 (cube-c8 cube)) (corner-sticker1 (cube-c8 cube)) (corner-sticker3 (cube-c8 cube))) (cube-c7 cube)
+             (make-corner (corner-sticker2 (cube-c2 cube)) (corner-sticker1 (cube-c2 cube)) (corner-sticker3 (cube-c2 cube))) (cube-solution "cube")))
 
 
 ;Edge=?

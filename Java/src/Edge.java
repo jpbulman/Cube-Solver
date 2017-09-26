@@ -3,8 +3,14 @@
  */
 public class Edge {
 
-    public Edge(int sticker1, int sticker2){}
+    public int esticker1,esticker2;
 
-    Edge YB = new Edge(1,1);
+    public Edge(int sticker1, int sticker2){
+
+        this.esticker1=sticker1;
+        this.esticker2=sticker2;
+
+    }
+
 
 }

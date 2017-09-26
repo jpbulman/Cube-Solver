@@ -80,17 +80,23 @@ public class Cube {
                this.c1, new Corner(this.c4.csticker2,this.c4.csticker1,this.c4.csticker3),this.c3,
                new Corner(this.c6.csticker2,this.c6.csticker1,this.c6.csticker3),this.c5,
                new Corner(this.c8.csticker2,this.c8.csticker1,this.c8.csticker3),this.c7,
-               new Corner(this.c2.csticker2,this.c2.csticker1,this.c2.csticker3),"");
+               new Corner(this.c2.csticker2,this.c2.csticker1,this.c2.csticker3),this.solution.concat("R"));
+    }
+
+    public Cube Rp(){
+        return R().R().R();
+    }
+
+    public Cube R2(){
+        return R().R();
     }
 
     public static void main(String[] args){
         Cube Solved = new Cube(YG,YO,YB,YR,GO,BO,BR,GR,WB,WO,WG,WR,YGO,YGR,YBO,YBR,WBO,WBR,WGO,WGR,"");
 
-        System.out.println(Solved.c2.csticker3);
-        System.out.println(Solved.R().c2.csticker3);
-
-
-
+        System.out.println(Solved.c2.csticker1);
+        System.out.println(Solved.R().c2.csticker1);
+        System.out.println(Solved.Rp().c2.csticker1);
 
     }
 

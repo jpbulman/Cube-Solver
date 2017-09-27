@@ -1,3 +1,5 @@
+import javax.swing.text.Position;
+
 /**
  * Created by JP Bulman on 9/25/2017.
  */
@@ -80,7 +82,7 @@ public class Cube {
                this.c1, new Corner(this.c4.csticker2,this.c4.csticker1,this.c4.csticker3),this.c3,
                new Corner(this.c6.csticker2,this.c6.csticker1,this.c6.csticker3),this.c5,
                new Corner(this.c8.csticker2,this.c8.csticker1,this.c8.csticker3),this.c7,
-               new Corner(this.c2.csticker2,this.c2.csticker1,this.c2.csticker3),this.solution.concat("R"));
+               new Corner(this.c2.csticker2,this.c2.csticker1,this.c2.csticker3),this.solution.concat(" R"));
     }
 
     public Cube Rp(){
@@ -91,12 +93,74 @@ public class Cube {
         return R().R();
     }
 
+    public Cube U(){
+        return new Cube(this.e2,this.e3,this.e4,this.e1,this.e5,this.e6,this.e7,this.e8,this.e9,this.e10,this.e11,this.e12,
+                new Corner(this.c3.csticker1,this.c3.csticker3,this.c3.csticker2),
+                new Corner(this.c1.csticker1,this.c1.csticker3,this.c1.csticker2),
+                new Corner(this.c4.csticker1,this.c4.csticker3,this.c4.csticker2),
+                new Corner(this.c2.csticker1,this.c2.csticker3,this.c2.csticker2),
+                this.c5,this.c6,this.c7,this.c8,this.solution.concat(" U"));
+    }
+
+    public Cube Up(){
+        return U().U().U();
+    }
+
+    public Cube U2(){
+        return U().U();
+    }
+
+    public Cube F(){
+        return new Cube(this.e1,this.e2, new Edge(this.e6.esticker2,this.e6.esticker1),this.e4,this.e5,
+                new Edge(this.e9.esticker2,this.e9.esticker1), new Edge(this.e4.esticker2,this.e4.esticker1),
+                this.e8,new Edge(this.e7.esticker2,this.e7.esticker1),this.e10,this.e11,this.e12,
+                this.c1,this.c2,new Corner(this.c5.csticker3,this.c5.csticker2,this.c5.csticker1),
+                new Corner(this.c3.csticker3,this.c3.csticker2,this.c3.csticker1),
+                new Corner(this.c6.csticker3,this.c6.csticker2,this.c6.csticker1),
+                new Corner(this.c4.csticker3,this.c4.csticker2,this.c4.csticker1),
+                this.c7,this.c8,this.solution.concat(" F"));
+    }
+
+    public Cube Fp(){
+        return F().F().F();
+    }
+
+    public Cube F2(){
+        return F().F();
+    }
+
+
+    public Cube BWE(int acc){
+
+        if(acc == 4){return this;}
+
+        if((this.e1.esticker1==1 && this.e1.esticker2==3)||(this.e1.esticker1==3 && this.e1.esticker2==1)){
+            if(this.e1.esticker1==1 && this.e1.esticker2==3){return U2().F2();}
+            else {return U().Rp().F();}
+        }
+        else {U().BWE(acc + 1);}
+
+    return this;}
+
+    public Cube Solve(){
+
+        BWE(0);
+
+    return this;}
+
     public static void main(String[] args){
         Cube Solved = new Cube(YG,YO,YB,YR,GO,BO,BR,GR,WB,WO,WG,WR,YGO,YGR,YBO,YBR,WBO,WBR,WGO,WGR,"");
+        Cube ToSolve = new Cube(WB,YO,YG,YR,GO,BO,BR,GR,YB,WO,WG,WR,YGO,YGR,YBO,YBR,WBO,WBR,WGO,WGR,"");
+        Cube CrossSolved = ToSolve.BWE(0);
 
         System.out.println(Solved.c2.csticker1);
-        System.out.println(Solved.R().c2.csticker1);
+        System.out.println(Solved.R().U2().Rp().c4.csticker3);
         System.out.println(Solved.Rp().c2.csticker1);
+        System.out.println(Solved.R2().c2.csticker1);
+
+        System.out.print(CrossSolved.solution);
+
+
 
     }
 

@@ -1,3 +1,4 @@
+import javax.swing.*;
 import javax.swing.text.Position;
 
 /**
@@ -130,35 +131,148 @@ public class Cube {
     }
 
 
-    public Cube BWE(int acc){
+    public Cube L(){
+        return new Cube(this.e1,this.e5,this.e3,this.e4,this.e10,this.e2,this.e7,this.e8,this.e9,this.e6,this.e11,this.e12,
+                new Corner(this.c7.csticker2,this.c7.csticker1,this.c7.csticker3),this.c2,
+                new Corner(this.c1.csticker2,this.c1.csticker1,this.c1.csticker3),this.c4,
+                new Corner(this.c3.csticker2,this.c3.csticker1,this.c3.csticker3),this.c6,
+                new Corner(this.c5.csticker2,this.c5.csticker1,this.c5.csticker3),this.c8,this.solution.concat(" L"));
+    }
 
-        if(acc == 4){return this;}
+    public Cube Lp(){
+        return L().L().L();
+    }
 
+    public Cube L2(){
+        return L().L();
+    }
+
+    public Cube D(){
+        return new Cube(this.e1,this.e2,this.e3,this.e4,this.e5,this.e6,this.e7,this.e8,this.e10,this.e11,this.e12,this.e9,
+                this.c1,this.c2,this.c3,this.c4,
+                new Corner(this.c7.csticker1,this.c7.csticker3,this.c7.csticker2),
+                new Corner(this.c5.csticker1,this.c5.csticker3,this.c5.csticker2),
+                new Corner(this.c8.csticker1,this.c8.csticker3,this.c8.csticker2),
+                new Corner(this.c6.csticker1,this.c6.csticker3,this.c6.csticker2),this.solution.concat(" D"));
+    }
+
+    public Cube B(){
+        return new Cube(new Edge(this.e8.esticker2,this.e8.esticker1), this.e2,this.e3,this.e4,new Edge(this.e1.esticker2,this.e1.esticker1),
+                this.e6,this.e7,new Edge(this.e11.esticker2,this.e11.esticker1),this.e9,this.e10,new Edge(this.e5.esticker2,this.e5.esticker1),
+                this.e12,new Corner(this.c2.csticker3,this.c2.csticker2,this.c2.csticker1),
+                new Corner(this.c8.csticker3,this.c8.csticker2,this.c8.csticker1),
+                this.c3,this.c4,this.c5,this.c6,
+                new Corner(this.c1.csticker3,this.c1.csticker2,this.c1.csticker1),
+                new Corner(this.c7.csticker3,this.c7.csticker2,this.c7.csticker1),this.solution.concat(" B"));
+    }
+
+    public Cube Bp(){
+        return B().B().B();
+    }
+
+    public Cube B2(){
+        return B().B();
+    }
+
+
+    public Cube BWE(int Uacc,int Dacc){
+
+        //If the U and the D layer do not have the edge, it puts the equator edges into the U/D layers and searches again
+        if(Dacc==4){
+            return L().R().BWE(0,0);
+        }
+
+        //If the U layer does not  have it, it starts to search the D-layer
+        if(Uacc == 4){
+            if ((this.e9.esticker1==1 && this.e9.esticker2==3)||(this.e9.esticker1==3 && this.e9.esticker2==1)){
+                if(this.e9.esticker1==1 && this.e9.esticker2==3){return this;}
+                else {return D().R().F();}
+            }
+            else {return D().BWE(Uacc,(Dacc + 1));}
+        }
+
+        //Searches the U-layer for the WB edge
         if((this.e1.esticker1==1 && this.e1.esticker2==3)||(this.e1.esticker1==3 && this.e1.esticker2==1)){
             if(this.e1.esticker1==1 && this.e1.esticker2==3){return U2().F2();}
             else {return U().Rp().F();}
         }
-        else {U().BWE(acc + 1);}
+        else {return U().BWE(Uacc + 1, Dacc);}
 
-    return this;}
+    }
 
-    public Cube Solve(){
 
-        BWE(0);
+    public Cube RWE(int Uacc){
 
-    return this;}
+        //If the U layer does not have it, the function checks the D-layer, and if it is not there, it cycles the remaining edges into the U and
+        //D layers and starts the search over. This only has a 4 in 11 chance of happening, and if it does happen, the function only has to
+        //re-cycle once.
+        if (Uacc==4){
+            if((this.e10.esticker1==1 && this.e10.esticker2==5)||(this.e10.esticker1==5 && this.e10.esticker2==1)){return L2().RWE(0);}
+            else if((this.e11.esticker1==1 && this.e11.esticker2==5)||(this.e11.esticker1==5 && this.e11.esticker2==1)){return B2().RWE(0);}
+            else if((this.e12.esticker1==1 && this.e12.esticker2==5)||(this.e12.esticker1==5 && this.e12.esticker2==1)){return R2().RWE(0);}
+            else {return L().R().RWE(0);}
+        }
+
+        //Searches the U layer for the Red White edge
+        if ((this.e1.esticker1==1 && this.e1.esticker2==5)||(this.e1.esticker1==5 && this.e1.esticker2==1)){
+            if (this.e1.esticker1==1 && this.e1.esticker2==5){return U().R2();}
+            else {return Bp().R();}
+        }
+        else {return U().RWE(Uacc + 1);}
+
+
+    }
+
+    public Cube GWE(int Uacc){
+        if (Uacc==4) {
+            if((this.e5.esticker1==1 && this.e5.esticker2==4)||(this.e5.esticker1==4 && this.e5.esticker2==1)){return Bp().GWE(0);}
+            else if((this.e6.esticker1==1 && this.e6.esticker2==4)||(this.e6.esticker1==4 && this.e6.esticker2==1)){return Lp().GWE(0);}
+            else if((this.e7.esticker1==1 && this.e7.esticker2==4)||(this.e7.esticker1==4 && this.e7.esticker2==1)){return R().U().Rp().GWE(0);}
+            else if((this.e8.esticker1==1 && this.e8.esticker2==4)||(this.e8.esticker1==4 && this.e8.esticker2==1)){return B().GWE(0);}
+            else {return L2().B2().GWE(0);}
+        }
+
+        if((this.e1.esticker1==1 && this.e1.esticker2==4)||(this.e1.esticker1==4 && this.e1.esticker2==1)){
+            if (this.e1.esticker1==1 && this.e1.esticker2==4){return B2();}
+            else {return Up().Lp().B();}
+        }
+        else{return U().GWE(Uacc + 1);}
+    }
+
+
+    /*
+    public Cube Solve(Cube the){
+
+        the.BWE(0,0);
+
+
+    return the;}*/
 
     public static void main(String[] args){
         Cube Solved = new Cube(YG,YO,YB,YR,GO,BO,BR,GR,WB,WO,WG,WR,YGO,YGR,YBO,YBR,WBO,WBR,WGO,WGR,"");
-        Cube ToSolve = new Cube(WB,YO,YG,YR,GO,BO,BR,GR,YB,WO,WG,WR,YGO,YGR,YBO,YBR,WBO,WBR,WGO,WGR,"");
-        Cube CrossSolved = ToSolve.BWE(0);
+        Cube ToSolve = new Cube(YB,YO,YG,YR,GO,BR,WB,GR,BO,WO,WG,WR,YGO,YGR,YBO,YBR,WBO,WBR,WGO,WGR,"");
+        Cube CrossSolved = ToSolve.BWE(0,0);
+
+        //U2 L2 U F2 L2 R2 U' R2 B2 D2 F L2 R' F' D' F U' L B2 R
+        Cube Scrambled = new Cube(new Edge(6,3),WR,GR,new Edge(3,5),YB,WB,new Edge(6,4),WO,
+                YO,new Edge(5,2),YG,WG,YGO,new Corner(3,2,5),new Corner(4,5,2),
+                new Corner(5,1,4),new Corner(6,1,3),new Corner(3,5,1),
+                new Corner(3,6,2),new Corner(6,4,1),"");
 
         System.out.println(Solved.c2.csticker1);
         System.out.println(Solved.R().U2().Rp().c4.csticker3);
         System.out.println(Solved.Rp().c2.csticker1);
         System.out.println(Solved.R2().c2.csticker1);
 
-        System.out.print(CrossSolved.solution);
+        //System.out.println(CrossSolved.solution.replaceAll(" U U U U", "").replaceAll(" D D D D", "").replaceAll(" F F"," F2"));
+
+        System.out.println(Scrambled.BWE(0,0).RWE(0).GWE(0).solution.replaceAll(" U U U U", "").replaceAll(" D D D D", "").replaceAll(" F F"," F2")
+        .replaceAll(" L L", " L2").replaceAll(" U U"," U2").replaceAll(" R R", " R2").replaceAll(" B B", " B2"));
+
+
+        //Cube ne = Solved.Rt(Solved);
+
+        //System.out.println(ne.solution);
 
 
 

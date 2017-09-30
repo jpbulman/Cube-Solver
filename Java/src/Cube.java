@@ -131,7 +131,7 @@ public class Cube {
 
     public Cube F(){
         return new Cube(this.e1,this.e2, new Edge(this.e6.esticker2,this.e6.esticker1),this.e4,this.e5,
-                new Edge(this.e9.esticker2,this.e9.esticker1), new Edge(this.e4.esticker2,this.e4.esticker1),
+                new Edge(this.e9.esticker2,this.e9.esticker1), new Edge(this.e3.esticker2,this.e3.esticker1),
                 this.e8,new Edge(this.e7.esticker2,this.e7.esticker1),this.e10,this.e11,this.e12,
                 this.c1,this.c2,new Corner(this.c5.csticker3,this.c5.csticker2,this.c5.csticker1),
                 new Corner(this.c3.csticker3,this.c3.csticker2,this.c3.csticker1),
@@ -218,10 +218,6 @@ public class Cube {
 
     }
 
-    public String X(){
-        return this.solution="hsdhshdh";
-    }
-
 
     public Cube RWE(int Uacc){
 
@@ -303,7 +299,7 @@ public class Cube {
       //Uses its own slot to solve
       if(this.c1.csticker1==1 || this.c1.csticker2==1 || this.c1.csticker3==1){
           if(this.c1.csticker1==1){
-              if(this.c1.csticker2==5){return R().U().Rp().U().R().Up().Rp().Corners(0);}
+              if(this.c1.csticker2==5){return R().U().Rp().U().R().Up().Rp().Corners(0);}//
               else if (this.c1.csticker2==3){return Up().Lp().U().L().F().U2().Fp().Corners(0);}
               else if (this.c1.csticker2==6){return L().Up().Lp().Bp().U2().B().Corners(0);}
               else {return U().Rp().U().R().B().U2().Bp().Corners(0);}
@@ -344,7 +340,7 @@ public class Cube {
 
             if(this.e1.esticker1==4){
                 if (this.e1.esticker2==6){return U2().Bp().L().U().Lp().Up().Lp().B().L().SecondLayerEdges(0);}
-                else {return U().Rp().U2().R().Up().Rp().U2().R().U().Rp().U2().R().SecondLayerEdges(0);}
+                else{return U().Rp().U().R().U().Rp().U().R().Up().Rp().Up().R().SecondLayerEdges(0);}
             }
 
             if(this.e1.esticker1==5){
@@ -352,7 +348,7 @@ public class Cube {
                 else {return Up().Rp().U().R().U().B().Up().Bp().SecondLayerEdges(0);}
             }
 
-            if(this.e1.esticker1==6){
+            if(this.e1.esticker1==6){  //Check moves here
                 if(this.e1.esticker2==3){return U().Lp().U().L().U().F().Up().Fp().SecondLayerEdges(0);}
                 else {return U().L().Up().Lp().Up().Bp().U().B().SecondLayerEdges(0);}
             }
@@ -369,7 +365,7 @@ public class Cube {
         Cube CrossSolved = ToSolve.BWE(0,0);
 
         //U2 L2 U F2 L2 R2 U' R2 B2 D2 F L2 R' F' D' F U' L B2 R
-        Cube Scrambled = new Cube(new Edge(6,3),WR,GR,new Edge(3,5),YB,WB,new Edge(6,4),WO,
+        Cube Scrambled = new Cube(new Edge(6,3),WR,GR,new Edge(5,3),YB,WB,new Edge(6,4),WO,
                 YO,new Edge(5,2),YG,WG,YGO,new Corner(3,2,5),new Corner(4,5,2),
                 new Corner(5,1,4),new Corner(6,1,3),new Corner(3,5,1),
                 new Corner(3,6,2),new Corner(6,4,1),"");
@@ -391,6 +387,9 @@ public class Cube {
                 .replaceAll(" U U", " U2").replaceAll(" D D", " D2").replaceAll(" F F", " F2").replaceAll(" B B", " B2")
                 .replaceAll(" L L", " L2").replaceAll(" R R", " R2")
                 );
+        //.RWE(0).GWE(0).OWE(0).Corners(0).SecondLayerEdges(0)
+        System.out.println(Scrambled.L().R().D().L().R().L2().U2().R2().U().B2().Up().L2().Up().Rp().Up().R2().U().Rp().U()
+                .R().Up().Rp().Lp().U().L().F().e7.esticker2);
 
         //System.out.println(Solved.X());
 

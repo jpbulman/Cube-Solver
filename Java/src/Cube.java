@@ -218,6 +218,10 @@ public class Cube {
 
     }
 
+    public String X(){
+        return this.solution="hsdhshdh";
+    }
+
 
     public Cube RWE(int Uacc){
 
@@ -329,8 +333,32 @@ public class Cube {
         if(this.e5.esticker1==4 && this.e5.esticker2==6 && this.e6.esticker1==3 && this.e6.esticker2==6 && this.e7.esticker1==3
                 && this.e7.esticker2==5 && this.e8.esticker1==4 && this.e8.esticker2==5){return this;}
 
-        if(Uacc==4){}
+        if(Uacc==4){return Fp().R().U().Rp().Up().Rp().F().R().SecondLayerEdges(0);}
 
+        if(this.e1.esticker1 != 2 && this.e1.esticker2 != 2){
+
+            if(this.e1.esticker1==3){
+                if (this.e1.esticker2==6){return F().Up().Fp().Up().Lp().U().L().SecondLayerEdges(0);}
+                else {return Fp().R().U().Rp().Up().Rp().F().R().SecondLayerEdges(0);}
+            }
+
+            if(this.e1.esticker1==4){
+                if (this.e1.esticker2==6){return U2().Bp().L().U().Lp().Up().Lp().B().L().SecondLayerEdges(0);}
+                else {return U().Rp().U2().R().Up().Rp().U2().R().U().Rp().U2().R().SecondLayerEdges(0);}
+            }
+
+            if(this.e1.esticker1==5){
+                if (this.e1.esticker2==3){return Up().R().Up().Rp().F().Rp().Fp().R().SecondLayerEdges(0);}
+                else {return Up().Rp().U().R().U().B().Up().Bp().SecondLayerEdges(0);}
+            }
+
+            if(this.e1.esticker1==6){
+                if(this.e1.esticker2==3){return U().Lp().U().L().U().F().Up().Fp().SecondLayerEdges(0);}
+                else {return U().L().Up().Lp().Up().Bp().U().B().SecondLayerEdges(0);}
+            }
+
+        }
+        else{return U().SecondLayerEdges(Uacc + 1);}
 
     return this;}
 
@@ -353,12 +381,18 @@ public class Cube {
 
         Corner test = new Corner(1,3,6);
 
-        System.out.println(Scrambled.BWE(0,0).RWE(0).GWE(0).OWE(0).Corners(0).solution.replaceAll(" U U U U", "").replaceAll(" D D D D", "")
-                .replaceAll(" F F"," F2").replaceAll(" L L", " L2").replaceAll(" U U"," U2").replaceAll(" R R", " R2").replaceAll(" B B", " B2")
-                .replaceAll(" U2 U", " U'").replaceAll(" R2 R", " R'").replaceAll(" L2 L", " L'").replaceAll(" F2 F", " F'")
-                .replaceAll(" B2 B", " B'"));
+        //System.out.println(Solved.e1.esticker1 != 2 && Solved.e1.esticker2 != 2);
 
-        //System.out.println(Solved.BWE(0,0).RWE(0).GWE(0).OWE(0).Corners(0).solution);
+        //ORDER OF REPLACEMENT DOES MATTER
+        System.out.println(Scrambled.BWE(0,0).RWE(0).GWE(0).OWE(0).Corners(0).SecondLayerEdges(0).solution.replaceAll(" U U U U", "").replaceAll(" D D D D", "")
+                .replaceAll(" F F F F", "").replaceAll(" B B B B", "").replaceAll(" R R R R", "".replaceAll(" L L L L", ""))
+                .replaceAll(" U U U", " U'").replaceAll(" D D D", " D'").replaceAll(" F F F", " F'").replaceAll(" B B B", " B'")
+                .replaceAll(" L L L", " L'").replaceAll(" R R R", " R'")
+                .replaceAll(" U U", " U2").replaceAll(" D D", " D2").replaceAll(" F F", " F2").replaceAll(" B B", " B2")
+                .replaceAll(" L L", " L2").replaceAll(" R R", " R2")
+                );
+
+        //System.out.println(Solved.X());
 
 
         //Cube ne = Solved.Rt(Solved);

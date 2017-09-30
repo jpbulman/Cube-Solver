@@ -4,6 +4,24 @@ import javax.swing.text.Position;
 /**
  * Created by JP Bulman on 9/25/2017.
  */
+
+
+//Overall/General notes for this document
+    //Todo:
+
+
+
+//Reasons and misc explanations:
+    //The cycling of nested if's with the moves is kind of gross, but works fairly well. Essentially, this is a search, check, and then if that fails,
+    // check a new spot until the piece desired is found.
+    //I tried using switch statements instead, but these resulted in non-constant expressions, which is something that Java was not thrilled with
+    //One of my goals is to try and find a workaround this, or to try and see if there is another alternative that is more condensed
+    //Making some of the functions more abstract could be advantageous
+
+
+
+
+
 public class Cube {
 
     private Edge e1,e2,e3,e4,e5,e6,e7,e8,e9,e10,e11,e12;
@@ -239,14 +257,83 @@ public class Cube {
         else{return U().GWE(Uacc + 1);}
     }
 
+    public Cube OWE(int Uacc){
 
-    /*
-    public Cube Solve(Cube the){
+        if ((this.e10.esticker1==1 && this.e10.esticker2==6)||(this.e10.esticker1==6 && this.e10.esticker2==1)){
+            if((this.e10.esticker1==1 && this.e10.esticker2==6)){return this;}
+            else {return L2().Up().Fp().L().F();}
+        }
 
-        the.BWE(0,0);
+        if((this.e7.esticker1==1 && this.e7.esticker2==6)||(this.e7.esticker1==6 && this.e6.esticker2==1)){
+            return R().U().Rp().OWE(0);
+        }
+
+        if((this.e8.esticker1==1 && this.e8.esticker2==6)||(this.e8.esticker1==6 && this.e8.esticker2==1)){
+            return Rp().Up().R().OWE(0);
+        }
+
+        if (Uacc == 4){return L().OWE(0);}
+
+        if ((this.e1.esticker1==1 && this.e1.esticker2==6)||(this.e1.esticker1==6 && this.e1.esticker2==1)){
+            if (this.e1.esticker1==1 && this.e1.esticker2==6){return Up().L2();}
+            else {return B().Lp().Bp();}
+        }
+        else {return U().OWE(Uacc + 1);}
+    }
+
+    //This is the function that solves all of the first layer corners
+    //Instead of doing search checks, it uses a generative recursion style template combined with a context preserving accumulator
+    //The function looks takes the first white corner it finds and then puts it in the correct position.
+    //It then calls itself until it finds and permutes every first layer corner.
+    //The trivial case for the generative recursion is just if the cube is solved, that is what the first 'if' block is looking at
+    //If the function is called and the corners are solved, then it just returns
+
+    public Cube Corners(int Uacc){
+
+        //Base Case
+      if(this.c5.csticker2==3 && this.c5.csticker3==6 && this.c6.csticker2==3 && this.c7.csticker2==4 && this.c7.csticker3==6
+              && this.c8.csticker2==4){return this;}
+
+      if(Uacc == 4){return R().U().Rp().Corners(0);}
+
+      //Uses its own slot to solve
+      if(this.c1.csticker1==1 || this.c1.csticker2==1 || this.c1.csticker3==1){
+          if(this.c1.csticker1==1){
+              if(this.c1.csticker2==5){return R().U().Rp().U().R().Up().Rp().Corners(0);}
+              else if (this.c1.csticker2==3){return Up().Lp().U().L().F().U2().Fp().Corners(0);}
+              else if (this.c1.csticker2==6){return L().Up().Lp().Bp().U2().B().Corners(0);}
+              else {return U().Rp().U().R().B().U2().Bp().Corners(0);}
+          }
+
+          if(this.c1.csticker2==1){
+              if(this.c1.csticker1==3){return R().U2().Rp().Corners(0);}
+              else if (this.c1.csticker1==6){return F().Up().Fp().Corners(0);}
+              else if (this.c1.csticker1==4){return Bp().Up().B().Corners(0);}
+              else {return U().Rp().Up().R().Corners(0);}
+          }
+
+          if(this.c1.csticker3==1){
+              if(this.c1.csticker1==5){return Fp().U2().F().Corners(0);}
+              else if (this.c1.csticker1==3){return U2().Lp().U().L().Corners(0);}
+              else if (this.c1.csticker1==6){return Up().Bp().U().B().Corners(0);}
+              else {return Rp().U().R().Corners(0);}
+          }
+      }
+      else {return U().Corners(Uacc + 1);}
+
+    return this;}
+
+    public Cube SecondLayerEdges(int Uacc){
+
+        //Base case, is it solved?
+        if(this.e5.esticker1==4 && this.e5.esticker2==6 && this.e6.esticker1==3 && this.e6.esticker2==6 && this.e7.esticker1==3
+                && this.e7.esticker2==5 && this.e8.esticker1==4 && this.e8.esticker2==5){return this;}
+
+        if(Uacc==4){}
 
 
-    return the;}*/
+    return this;}
+
 
     public static void main(String[] args){
         Cube Solved = new Cube(YG,YO,YB,YR,GO,BO,BR,GR,WB,WO,WG,WR,YGO,YGR,YBO,YBR,WBO,WBR,WGO,WGR,"");
@@ -264,10 +351,14 @@ public class Cube {
         System.out.println(Solved.Rp().c2.csticker1);
         System.out.println(Solved.R2().c2.csticker1);
 
-        //System.out.println(CrossSolved.solution.replaceAll(" U U U U", "").replaceAll(" D D D D", "").replaceAll(" F F"," F2"));
+        Corner test = new Corner(1,3,6);
 
-        System.out.println(Scrambled.BWE(0,0).RWE(0).GWE(0).solution.replaceAll(" U U U U", "").replaceAll(" D D D D", "").replaceAll(" F F"," F2")
-        .replaceAll(" L L", " L2").replaceAll(" U U"," U2").replaceAll(" R R", " R2").replaceAll(" B B", " B2"));
+        System.out.println(Scrambled.BWE(0,0).RWE(0).GWE(0).OWE(0).Corners(0).solution.replaceAll(" U U U U", "").replaceAll(" D D D D", "")
+                .replaceAll(" F F"," F2").replaceAll(" L L", " L2").replaceAll(" U U"," U2").replaceAll(" R R", " R2").replaceAll(" B B", " B2")
+                .replaceAll(" U2 U", " U'").replaceAll(" R2 R", " R'").replaceAll(" L2 L", " L'").replaceAll(" F2 F", " F'")
+                .replaceAll(" B2 B", " B'"));
+
+        //System.out.println(Solved.BWE(0,0).RWE(0).GWE(0).OWE(0).Corners(0).solution);
 
 
         //Cube ne = Solved.Rt(Solved);

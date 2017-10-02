@@ -174,6 +174,14 @@ public class Cube {
                 new Corner(this.c6.csticker1,this.c6.csticker3,this.c6.csticker2),this.solution.concat(" D"));
     }
 
+    public Cube Dp(){
+        return D().D().D();
+    }
+
+    public Cube D2(){
+        return D().D();
+    }
+
     public Cube B(){
         return new Cube(new Edge(this.e8.esticker2,this.e8.esticker1), this.e2,this.e3,this.e4,new Edge(this.e1.esticker2,this.e1.esticker1),
                 this.e6,this.e7,new Edge(this.e11.esticker2,this.e11.esticker1),this.e9,this.e10,new Edge(this.e5.esticker2,this.e5.esticker1),
@@ -287,8 +295,9 @@ public class Cube {
     //It then calls itself until it finds and permutes every first layer corner.
     //The trivial case for the generative recursion is just if the cube is solved, that is what the first 'if' block is looking at
     //If the function is called and the corners are solved, then it just returns
-
     public Cube Corners(int Uacc){
+
+        //Rare cases?
 
         //Base Case
       if(this.c5.csticker2==3 && this.c5.csticker3==6 && this.c6.csticker2==3 && this.c7.csticker2==4 && this.c7.csticker3==6
@@ -358,6 +367,27 @@ public class Cube {
 
     return this;}
 
+    public Cube OLLedges(){
+
+        //base case, if all 4 edges are already oriented
+        if(this.e1.esticker1==2&&this.e2.esticker1==2&&this.e3.esticker1==2&&this.e4.esticker1==2){return this;}
+
+        if(this.e1.esticker1==2||this.e2.esticker1==2||this.e3.esticker1==2||this.e4.esticker1==2){
+
+            if (this.e1.esticker1==2&&this.e2.esticker1==2){return F().R().U().Rp().Up().Fp().OLLedges();}
+            else if (this.e2.esticker1==2&&this.e4.esticker1==2){return F().R().U().Rp().Up().Fp();}
+            else {return U().OLLedges();}
+
+        }
+        else {return F().R().U().Rp().Up().Fp().OLLedges();}}
+
+    public Cube OllCorners(){
+
+        if(this.c1.csticker1==2&&this.c2.csticker1==2&&this.c3.csticker1==2&&this.c4.csticker1==2){return this;}
+        else if (this.c4.csticker1==2){return U().OllCorners();}
+        else {return Rp().Dp().R().D().OllCorners();}
+
+    }
 
     public static void main(String[] args){
         Cube Solved = new Cube(YG,YO,YB,YR,GO,BO,BR,GR,WB,WO,WG,WR,YGO,YGR,YBO,YBR,WBO,WBR,WGO,WGR,"");
@@ -380,7 +410,7 @@ public class Cube {
         //System.out.println(Solved.e1.esticker1 != 2 && Solved.e1.esticker2 != 2);
 
         //ORDER OF REPLACEMENT DOES MATTER
-        System.out.println(Scrambled.BWE(0,0).RWE(0).GWE(0).OWE(0).Corners(0).SecondLayerEdges(0).solution.replaceAll(" U U U U", "").replaceAll(" D D D D", "")
+        System.out.println(Scrambled.BWE(0,0).RWE(0).GWE(0).OWE(0).Corners(0).SecondLayerEdges(0).OLLedges().OllCorners().solution.replaceAll(" U U U U", "").replaceAll(" D D D D", "")
                 .replaceAll(" F F F F", "").replaceAll(" B B B B", "").replaceAll(" R R R R", "".replaceAll(" L L L L", ""))
                 .replaceAll(" U U U", " U'").replaceAll(" D D D", " D'").replaceAll(" F F F", " F'").replaceAll(" B B B", " B'")
                 .replaceAll(" L L L", " L'").replaceAll(" R R R", " R'")
@@ -388,9 +418,10 @@ public class Cube {
                 .replaceAll(" L L", " L2").replaceAll(" R R", " R2")
                 );
         //.RWE(0).GWE(0).OWE(0).Corners(0).SecondLayerEdges(0)
-        System.out.println(Scrambled.L().R().D().L().R().L2().U2().R2().U().B2().Up().L2().Up().Rp().Up().R2().U().Rp().U()
-                .R().Up().Rp().Lp().U().L().F().e7.esticker2);
-
+        //System.out.println(Scrambled.BWE(0,0).RWE(0).GWE(0).OWE(0).Corners(0).SecondLayerEdges(0).OLLedges().solution);
+        System.out.println(Scrambled.BWE(0,0).RWE(0).GWE(0).OWE(0).Corners(0).SecondLayerEdges(0).OLLedges().c4.csticker1);
+        System.out.println(Scrambled.BWE(0,0).RWE(0).GWE(0).OWE(0).Corners(0).SecondLayerEdges(0).OLLedges().c4.csticker2);
+        System.out.println(Scrambled.BWE(0,0).RWE(0).GWE(0).OWE(0).Corners(0).SecondLayerEdges(0).OLLedges().c4.csticker3);
         //System.out.println(Solved.X());
 
 

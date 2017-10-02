@@ -94,7 +94,7 @@ public class Cube {
     static Corner WBO = new Corner(1,3,6);
     static Corner WBR = new Corner(1,3,5);
     static Corner WGO = new Corner(1,4,6);
-    static Corner WGR = new Corner(1,4,5);
+    static Corner WGR = new Corner(1,5,4);
 
     public Cube R(){
         return new Cube(this.e1, this.e2, this.e3, this.e7, this.e5,this.e6,this.e12,this.e4,this.e9,this.e10,this.e11,this.e8,
@@ -303,9 +303,13 @@ public class Cube {
       if(this.c5.csticker2==3 && this.c5.csticker3==6 && this.c6.csticker2==3 && this.c7.csticker2==4 && this.c7.csticker3==6
               && this.c8.csticker2==4){return this;}
 
-      if(Uacc == 4){return R().U().Rp().Corners(0);}
+     if (Uacc==4&&this.c6.csticker2!=3){return R().U().Rp().Corners(0);}
+        else if (Uacc==4&&this.c5.csticker2!=3){return Lp().U().L().Corners(0);}
+        else if (Uacc==4&&this.c7.csticker2!=4){return L().U().Lp().Corners(0);}
+        else if (Uacc==4&&this.c8.csticker2!=4){return Rp().Up().R().Corners(0);}
 
-      //Uses its own slot to solve
+
+        //Uses its own slot to solve
       if(this.c1.csticker1==1 || this.c1.csticker2==1 || this.c1.csticker3==1){
           if(this.c1.csticker1==1){
               if(this.c1.csticker2==5){return R().U().Rp().U().R().Up().Rp().Corners(0);}//
@@ -424,8 +428,10 @@ public class Cube {
 
     }
 
+    //This function aligns the last layer so the cube is solved
     public Cube AUF(){
 
+        //Base case, checks to see if it is solved or not
         if (this.e3.esticker2==this.c5.csticker2){return this;}
         else {return U().AUF();}
 
@@ -442,6 +448,12 @@ public class Cube {
                 new Corner(5,1,4),new Corner(6,1,3),new Corner(3,5,1),
                 new Corner(3,6,2),new Corner(6,4,1),"");
 
+        //B2 U B2 U' F2 L2 F2 R2 D' F2 U2 L U2 R2 F' L' B' D2 L D' R2
+        Cube Scrambled2 = new Cube(YG, new Edge(6,4),BR,WO, new Edge(5,1),GR,new Edge(4,1),
+                new Edge(3,2),new Edge(6,2),new Edge(3,1),new Edge(6,3),
+                new Edge(5,2),new Corner(4,6,2),YGR,new Corner(5,1,3),
+                new Corner(3,2,6), YBR,WGO,WGR,new Corner(6,1,3),"");
+
         System.out.println(Solved.c2.csticker1);
         System.out.println(Solved.R().U2().Rp().c4.csticker3);
         System.out.println(Solved.Rp().c2.csticker1);
@@ -451,8 +463,10 @@ public class Cube {
 
         //System.out.println(Solved.e1.esticker1 != 2 && Solved.e1.esticker2 != 2);
 
+        //System.out.println(Scrambled2.BWE(0,0).solution);
+
         //ORDER OF REPLACEMENT DOES MATTER
-        System.out.println(Scrambled.BWE(0,0).RWE(0).GWE(0).OWE(0).Corners(0).SecondLayerEdges(0).OLLedges().OllCorners().PLLCorners().PLLEdges(0).AUF().solution.replaceAll(" U U U U", "").replaceAll(" D D D D", "")
+        System.out.println(Scrambled2.BWE(0,0).RWE(0).GWE(0).OWE(0).Corners(0).SecondLayerEdges(0).OLLedges().OllCorners().PLLCorners().PLLEdges(0).AUF().solution.replaceAll(" U U U U", "").replaceAll(" D D D D", "")
                 .replaceAll(" F F F F", "").replaceAll(" B B B B", "").replaceAll(" R R R R", "".replaceAll(" L L L L", ""))
                 .replaceAll(" U U U", " U'").replaceAll(" D D D", " D'").replaceAll(" F F F", " F'").replaceAll(" B B B", " B'")
                 .replaceAll(" L L L", " L'").replaceAll(" R R R", " R'")

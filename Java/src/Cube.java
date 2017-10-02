@@ -389,6 +389,48 @@ public class Cube {
 
     }
 
+    public Cube Tperm(){
+        return R().U().Rp().Up().Rp().F().R2().Up().Rp().Up().R().U().Rp().Fp();
+    }
+
+    public Cube Yperm(){
+        return F().R().Up().Rp().Up().R().U().Rp().Fp().R().U().Rp().Up().Rp().F().R().Fp();
+    }
+
+    public Cube PLLCorners(){
+
+        if((this.c1.csticker3==this.c3.csticker3)&&(this.c2.csticker3==this.c4.csticker3)){return this;}
+
+        if (this.c1.csticker3==this.c3.csticker3 && (this.c2.csticker3 != this.c4.csticker3)){return Tperm();}
+        else if ((Math.abs(this.c1.csticker3-this.c3.csticker3)==1)&&(Math.abs(this.c2.csticker3-this.c4.csticker3)==1)){return Yperm();}
+        else {return U().PLLCorners();}
+
+    }
+
+    public Cube Uperm1(){
+        return R().Up().R().U().R().U().R().Up().Rp().Up().R2();
+    }
+
+    public Cube PLLEdges(int Uacc){
+
+        if (((this.c1.csticker2==this.e1.esticker2)&&(this.e1.esticker2==this.c2.csticker2))&&
+                ((this.c1.csticker3==this.e2.esticker2)&&(this.e2.esticker2==this.c3.csticker3))){return this;}
+
+        if((this.c1.csticker2==this.e1.esticker2)&&(this.e1.esticker2==this.c2.csticker2)){return Uperm1().PLLEdges(Uacc);}
+        else if(((this.e3.esticker2==this.c2.csticker3)&&this.e3.esticker2==this.c4.csticker3)&&
+                ((this.e4.esticker2==this.c3.csticker2)&&this.e4.esticker2==this.c4.csticker2)){return Uperm1().Up().Uperm1();}
+        else if((Math.abs(this.e1.esticker2-this.c1.csticker2)==1)&&(Math.abs(this.e3.esticker2-this.c3.csticker2)==1)){return Uperm1().U().Uperm1();}
+        else {return U().PLLCorners();}
+
+    }
+
+    public Cube AUF(){
+
+        if (this.e3.esticker2==this.c5.csticker2){return this;}
+        else {return U().AUF();}
+
+    }
+
     public static void main(String[] args){
         Cube Solved = new Cube(YG,YO,YB,YR,GO,BO,BR,GR,WB,WO,WG,WR,YGO,YGR,YBO,YBR,WBO,WBR,WGO,WGR,"");
         Cube ToSolve = new Cube(YB,YO,YG,YR,GO,BR,WB,GR,BO,WO,WG,WR,YGO,YGR,YBO,YBR,WBO,WBR,WGO,WGR,"");
@@ -410,7 +452,7 @@ public class Cube {
         //System.out.println(Solved.e1.esticker1 != 2 && Solved.e1.esticker2 != 2);
 
         //ORDER OF REPLACEMENT DOES MATTER
-        System.out.println(Scrambled.BWE(0,0).RWE(0).GWE(0).OWE(0).Corners(0).SecondLayerEdges(0).OLLedges().OllCorners().solution.replaceAll(" U U U U", "").replaceAll(" D D D D", "")
+        System.out.println(Scrambled.BWE(0,0).RWE(0).GWE(0).OWE(0).Corners(0).SecondLayerEdges(0).OLLedges().OllCorners().PLLCorners().PLLEdges(0).AUF().solution.replaceAll(" U U U U", "").replaceAll(" D D D D", "")
                 .replaceAll(" F F F F", "").replaceAll(" B B B B", "").replaceAll(" R R R R", "".replaceAll(" L L L L", ""))
                 .replaceAll(" U U U", " U'").replaceAll(" D D D", " D'").replaceAll(" F F F", " F'").replaceAll(" B B B", " B'")
                 .replaceAll(" L L L", " L'").replaceAll(" R R R", " R'")

@@ -18,6 +18,12 @@ import javax.swing.text.Position;
     //One of my goals is to try and find a workaround this, or to try and see if there is another alternative that is more condensed
     //Making some of the functions more abstract could be advantageous
 
+//General overview of solving process:
+    //Cross:
+        //BWE:
+            //Looks for the blue-white edge, finds where it is, and then does setup moves to put it in a position where it will then be solved
+        //RWE,GWE,OWE: Same principle as BWE except with the remaining
+    //Corners:
 
 
 
@@ -474,16 +480,7 @@ public class Cube {
                 .replaceAll(" L L", " L2").replaceAll(" R R", " R2")
                 );
         //.RWE(0).GWE(0).OWE(0).Corners(0).SecondLayerEdges(0)
-        //System.out.println(Scrambled.BWE(0,0).RWE(0).GWE(0).OWE(0).Corners(0).SecondLayerEdges(0).OLLedges().solution);
-        System.out.println(Scrambled.BWE(0,0).RWE(0).GWE(0).OWE(0).Corners(0).SecondLayerEdges(0).OLLedges().c4.csticker1);
-        System.out.println(Scrambled.BWE(0,0).RWE(0).GWE(0).OWE(0).Corners(0).SecondLayerEdges(0).OLLedges().c4.csticker2);
-        System.out.println(Scrambled.BWE(0,0).RWE(0).GWE(0).OWE(0).Corners(0).SecondLayerEdges(0).OLLedges().c4.csticker3);
-        //System.out.println(Solved.X());
 
-
-        //Cube ne = Solved.Rt(Solved);
-
-        //System.out.println(ne.solution);
 
 
 

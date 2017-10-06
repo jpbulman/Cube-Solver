@@ -19,14 +19,66 @@ import javax.swing.text.Position;
     //Making some of the functions more abstract could be advantageous
 
 //General overview of solving process:
-    //Cross:
-        //BWE:
-            //Looks for the blue-white edge, finds where it is, and then does setup moves to put it in a position where it will then be solved
-        //RWE,GWE,OWE: Same principle as BWE except with the remaining
-    //Corners:
+
+    //Method: Beginners
+
+        //Cross:
+            //BWE:
+                //Looks for the blue-white edge, finds where it is, and then does setup moves to put it in a position where it will then be solved
+            //RWE,GWE,OWE: Same principle as BWE except with the remaining
+
+        //First layer corners:
+            //Corners
+                //Uses generative recursion
+                    //It solves a first layer corner each time
+                    //The termination case is when all of the first layer corners are solved
+                    //This will always terminate because the function goes through the possible states and solves corners and only finishes when
+                        //all of them are solved. It also has catch cases that prevent things like an adjacent swap happening
+
+        //Second layer edges
+            //SecondLayerEdges
+                //Uses generative recursion
+                    //It solves the middle layer edges
+                    //The base case is when all 4 of the equator edges are solved
+                    //This will always terminate because the function only finishes when all of the edges are solved
+
+        //OLL Edges
+            //Basic beginner style strategy with generative recursion
+            //Looks for one case, otherwise cycles until it reaches that point
+
+        //OLL Corners
+            //Standard algorithm for orientation R' D' R D
+            //Base case is when the yellow face is done
+
+        //PLL Corners
+            //Looks for the only 3 possible cases: solved, adjacent, or opposite
+
+        //PLL Edges
+            //This was a bit harder because of all the different edge cases
+            //Essentially, it looks for weird cases first, then, if none of those are true, it looks for a u-perm
+            //If none of these are true, it does a U until one of them is
+
+        //AUF
+            //Pretty straight forward, just does one turn move until the cube is finished
 
 
+        /*
+    Color key
+    1-White
+    2-Yellow
+    3-Blue
+    4-Green
+    5-Red
+    6-Orange
 
+    Corners have sticker1 that is the sticker on the top | bottom face
+    Corners have sticker2 that is the sticker on the front | back face
+    Corners have sticker3 that is the sticker on the left | right face
+
+    Edges have sticker1 on whichever sticker is on the 'oriented side' with respect to a YB orientation
+    Sticker2 is the other on side of the edge
+
+    */
 
 public class Cube {
 
@@ -61,21 +113,6 @@ public class Cube {
         this.solution = solution;
 
     }
-
-    /*
-    Color key
-    1-White
-    2-Yellow
-    3-Blue
-    4-Green
-    5-Red
-    6-Orange
-
-    Corners have sticker1 that is the sticker on the top | bottom face
-    Corners have sticker2 that is the sticker on the front | back face
-    Corners have sticker3 that is the sticker on the left | right face
-
-    */
 
     static Edge YG = new Edge(2,4);
     static Edge YO = new Edge(2,6);
@@ -343,6 +380,8 @@ public class Cube {
     return this;}
 
     public Cube SecondLayerEdges(int Uacc){
+
+        //Extreme cases?
 
         //Base case, is it solved?
         if(this.e5.esticker1==4 && this.e5.esticker2==6 && this.e6.esticker1==3 && this.e6.esticker2==6 && this.e7.esticker1==3

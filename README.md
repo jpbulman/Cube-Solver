@@ -10,4 +10,7 @@ brute force it? Well the most amount of moves it takes to solve a Rubik's Cube i
 20^19 states, check every one, and then compare each to others to see which has the shortest possible solution. Unless super computers
 and/or CPU clusters have become readily available, I do not have enough computation power for that.
 
+This solver uses standard half-turn metric notation for solving; if you want to learn more about this, here is a helpful link:
+https://ruwix.com/the-rubiks-cube/notation/
+
 Enjoy solving! 

@@ -7,7 +7,7 @@ import javax.swing.text.Position;
 
 
 //Overall/General notes for this document
-    //Todo:
+    //Todo: Cleanup
 
 
 
@@ -80,6 +80,7 @@ import javax.swing.text.Position;
 
     */
 
+
 public class Cube {
 
     private Edge e1,e2,e3,e4,e5,e6,e7,e8,e9,e10,e11,e12;
@@ -114,6 +115,8 @@ public class Cube {
 
     }
 
+    //Some possible edges and corners are predefined here for the solved cube and for when they come up in scrambled cubes
+
     static Edge YG = new Edge(2,4);
     static Edge YO = new Edge(2,6);
     static Edge YB = new Edge(2,3);
@@ -138,6 +141,16 @@ public class Cube {
     static Corner WBR = new Corner(1,3,5);
     static Corner WGO = new Corner(1,4,6);
     static Corner WGR = new Corner(1,5,4);
+
+
+
+    //Here are the move functions for the cubesolver
+        //They take in a cube and return a new cube
+        //All inverse move or 'p' (stands for prime) moves are the same as doing its normal move three times
+        //Since the computation is very simple and not expensive, it is much cleaner to write it as three of its normal moves rather than its own move
+        //Then, during the end when the solution is process, the three moves in a row (and many other things) are filtered out and replaced with
+        //proper notation.
+        //Same principal with '2' moves, the same thing as the normal move, but done twice
 
     public Cube R(){
         return new Cube(this.e1, this.e2, this.e3, this.e7, this.e5,this.e6,this.e12,this.e4,this.e9,this.e10,this.e11,this.e8,
@@ -243,6 +256,9 @@ public class Cube {
         return B().B();
     }
 
+
+    //Solving functions
+    //This explained a lot more up top, but essentially, most functions are designed with generative recursion so that the pieces are solved
 
     public Cube BWE(int Uacc,int Dacc){
 
@@ -499,6 +515,12 @@ public class Cube {
                 new Edge(5,2),new Corner(4,6,2),YGR,new Corner(5,1,3),
                 new Corner(3,2,6), YBR,WGO,WGR,new Corner(6,1,3),"");
 
+        //B' U2 F D2 F' L2 D2 B' D2 F D B2 F L' U R B' R2 F R'
+        Cube Scrambledn = new Cube(new Edge(5,1),new Edge(4,1),new Edge(6,2),new Edge(6,1),
+                BO, GO, new Edge(3,2),new Edge(4,2),new Edge(5,2),WB,GR,new Edge(5,3),
+                new Corner(5,1,4),WGO,new Corner(3,1,6),new Corner(5,4,2),
+                new Corner(3,5,2), YBO,new Corner(2,6,4),new Corner(5,3,1),"");
+
         System.out.println(Solved.c2.csticker1);
         System.out.println(Solved.R().U2().Rp().c4.csticker3);
         System.out.println(Solved.Rp().c2.csticker1);
@@ -506,19 +528,16 @@ public class Cube {
 
         Corner test = new Corner(1,3,6);
 
-        //System.out.println(Solved.e1.esticker1 != 2 && Solved.e1.esticker2 != 2);
-
-        //System.out.println(Scrambled2.BWE(0,0).solution);
-
-        //ORDER OF REPLACEMENT DOES MATTER
-        System.out.println(Scrambled2.BWE(0,0).RWE(0).GWE(0).OWE(0).Corners(0).SecondLayerEdges(0).OLLedges().OllCorners().PLLCorners().PLLEdges(0).AUF().solution.replaceAll(" U U U U", "").replaceAll(" D D D D", "")
+        //ORDER OF REPLACEMENT DOES MATTER HERE
+        //Replaces the repeated moves with their proper notation symbol
+        //Ex: R R --> R2
+        System.out.println(Scrambledn.BWE(0,0).RWE(0).GWE(0).OWE(0).Corners(0).SecondLayerEdges(0).OLLedges().OllCorners().PLLCorners().PLLEdges(0).AUF().solution.replaceAll(" U U U U", "").replaceAll(" D D D D", "")
                 .replaceAll(" F F F F", "").replaceAll(" B B B B", "").replaceAll(" R R R R", "".replaceAll(" L L L L", ""))
                 .replaceAll(" U U U", " U'").replaceAll(" D D D", " D'").replaceAll(" F F F", " F'").replaceAll(" B B B", " B'")
                 .replaceAll(" L L L", " L'").replaceAll(" R R R", " R'")
                 .replaceAll(" U U", " U2").replaceAll(" D D", " D2").replaceAll(" F F", " F2").replaceAll(" B B", " B2")
                 .replaceAll(" L L", " L2").replaceAll(" R R", " R2")
                 );
-        //.RWE(0).GWE(0).OWE(0).Corners(0).SecondLayerEdges(0)
 
 
 

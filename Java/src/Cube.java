@@ -521,13 +521,6 @@ public class Cube {
                 new Corner(5,1,4),WGO,new Corner(3,1,6),new Corner(5,4,2),
                 new Corner(3,5,2), YBO,new Corner(2,6,4),new Corner(5,3,1),"");
 
-        System.out.println(Solved.c2.csticker1);
-        System.out.println(Solved.R().U2().Rp().c4.csticker3);
-        System.out.println(Solved.Rp().c2.csticker1);
-        System.out.println(Solved.R2().c2.csticker1);
-
-        Corner test = new Corner(1,3,6);
-
         //ORDER OF REPLACEMENT DOES MATTER HERE
         //Replaces the repeated moves with their proper notation symbol
         //Ex: R R --> R2

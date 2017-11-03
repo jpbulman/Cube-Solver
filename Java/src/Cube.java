@@ -261,6 +261,7 @@ public class Cube {
     //This explained a lot more up top, but essentially, most functions are designed with generative recursion so that the pieces are solved
 
     public Cube BWE(int Uacc,int Dacc){
+        if(this.e9.esticker1==1 && this.e9.esticker2==3){return this;}
 
         //If the U and the D layer do not have the edge, it puts the equator edges into the U/D layers and searches again
         if(Dacc==4){
@@ -269,9 +270,8 @@ public class Cube {
 
         //If the U layer does not  have it, it starts to search the D-layer
         if(Uacc == 4){
-            if ((this.e9.esticker1==1 && this.e9.esticker2==3)||(this.e9.esticker1==3 && this.e9.esticker2==1)){
-                if(this.e9.esticker1==1 && this.e9.esticker2==3){return this;}
-                else {return D().R().F();}
+            if (this.e9.esticker1==3 && this.e9.esticker2==1){
+                return D().R().F();
             }
             else {return D().BWE(Uacc,(Dacc + 1));}
         }
@@ -291,10 +291,13 @@ public class Cube {
         //If the U layer does not have it, the function checks the D-layer, and if it is not there, it cycles the remaining edges into the U and
         //D layers and starts the search over. This only has a 4 in 11 chance of happening, and if it does happen, the function only has to
         //re-cycle once.
+
+        if(this.e12.esticker1==1&&this.e12.esticker2==5){return this;}
+
         if (Uacc==4){
             if((this.e10.esticker1==1 && this.e10.esticker2==5)||(this.e10.esticker1==5 && this.e10.esticker2==1)){return L2().RWE(0);}
             else if((this.e11.esticker1==1 && this.e11.esticker2==5)||(this.e11.esticker1==5 && this.e11.esticker2==1)){return B2().RWE(0);}
-            else if((this.e12.esticker1==1 && this.e12.esticker2==5)||(this.e12.esticker1==5 && this.e12.esticker2==1)){return R2().RWE(0);}
+            else if(this.e12.esticker1==5 && this.e12.esticker2==1){return R2().RWE(0);}
             else {return L().R().RWE(0);}
         }
 
@@ -498,6 +501,48 @@ public class Cube {
 
     }
 
+    int currentTestMove = 0;
+
+    int currentCrossMoves = 8;
+
+    /*
+        1-White
+    2-Yellow
+    3-Blue
+    4-Green
+    5-Red
+    6-Orange
+    */
+
+    boolean isSolved(){
+        return (this.c1.csticker1==2&&this.e1.esticker1==2&&this.c2.csticker1==2&&this.e2.esticker1==2&&this.e4.esticker1==2&&
+        this.c3.csticker1==2&&this.e3.esticker1==2&&this.c4.csticker1==2&&this.c5.csticker1==1&&this.e9.esticker1==1&&this.c6.csticker1==1&&
+        this.e10.esticker1==1&&this.e12.esticker1==1&&this.c7.csticker1==1&&this.e11.esticker1==1&&this.c8.csticker1==1&&
+        this.c1.csticker3==6&&this.e2.esticker2==6&&this.c3.csticker3==6&&
+        this.c3.csticker2==3&&this.e3.esticker2==3&&this.c4.csticker2==3&&
+        this.c4.csticker3==5&&this.e4.esticker2==5&&this.c2.csticker3==5&&
+        this.c2.csticker2==4&&this.e1.esticker2==4&&this.c1.csticker2==4&&
+        this.c7.csticker3==6&&this.e10.esticker2==6&&this.c5.csticker3==6&&
+        this.c5.csticker2==3&&this.e9.esticker2==3&&this.c6.csticker2==3&&
+        this.c6.csticker3==5&&this.e12.esticker2==5&&this.c8.csticker3==5&&
+        this.c7.csticker2==4&&this.e11.esticker2==4&&this.c8.csticker2==4&&
+        this.e6.esticker2==6&&this.e6.esticker1==3&&this.e7.esticker1==3&&this.e7.esticker2==5);
+    }
+
+
+    public Cube optimalCross(){
+
+        //0-Blank/Nothing
+        //1-R,2-R',3-R2
+        //4-L,5-L',6-L2
+        //7-F,8-F',9-F2
+        //10-B,11-B',12-B2
+        //13-U,14-U',15-U2
+        //16-D,17-D',18-D2
+
+        return this;
+    }
+
     public static void main(String[] args){
         Cube Solved = new Cube(YG,YO,YB,YR,GO,BO,BR,GR,WB,WO,WG,WR,YGO,YGR,YBO,YBR,WBO,WBR,WGO,WGR,"");
         Cube ToSolve = new Cube(YB,YO,YG,YR,GO,BR,WB,GR,BO,WO,WG,WR,YGO,YGR,YBO,YBR,WBO,WBR,WGO,WGR,"");
@@ -530,7 +575,19 @@ public class Cube {
                 .replaceAll(" L L L", " L'").replaceAll(" R R R", " R'")
                 .replaceAll(" U U", " U2").replaceAll(" D D", " D2").replaceAll(" F F", " F2").replaceAll(" B B", " B2")
                 .replaceAll(" L L", " L2").replaceAll(" R R", " R2")
-                );
+        );
+
+        System.out.println("Move count: " +  Scrambledn.BWE(0,0).RWE(0).GWE(0).OWE(0).Corners(0).SecondLayerEdges(0).OLLedges().OllCorners().PLLCorners().PLLEdges(0).AUF().solution.replaceAll(" U U U U", "").replaceAll(" D D D D", "")
+                .replaceAll(" F F F F", "").replaceAll(" B B B B", "").replaceAll(" R R R R", "".replaceAll(" L L L L", ""))
+                .replaceAll(" U U U", " U'").replaceAll(" D D D", " D'").replaceAll(" F F F", " F'").replaceAll(" B B B", " B'")
+                .replaceAll(" L L L", " L'").replaceAll(" R R R", " R'")
+                .replaceAll(" U U", " U2").replaceAll(" D D", " D2").replaceAll(" F F", " F2").replaceAll(" B B", " B2")
+                .replaceAll(" L L", " L2").replaceAll(" R R", " R2").replaceAll("'","").replaceAll(" ", "").length()
+        );
+
+        System.out.println(Scrambledn.isSolved());
+
+        System.out.println(Solved.RWE(0).solution);
 
 
 

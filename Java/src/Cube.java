@@ -312,6 +312,9 @@ public class Cube {
     }
 
     public Cube GWE(int Uacc){
+
+        if(this.e11.esticker1==1&&this.e11.esticker2==4){return this;}
+
         if (Uacc==4) {
             if((this.e5.esticker1==1 && this.e5.esticker2==4)||(this.e5.esticker1==4 && this.e5.esticker2==1)){return Bp().GWE(0);}
             else if((this.e6.esticker1==1 && this.e6.esticker2==4)||(this.e6.esticker1==4 && this.e6.esticker2==1)){return Lp().GWE(0);}
@@ -362,17 +365,20 @@ public class Cube {
         //Rare cases?
 
         //Base Case
-      if(this.c5.csticker2==3 && this.c5.csticker3==6 && this.c6.csticker2==3 && this.c7.csticker2==4 && this.c7.csticker3==6
-              && this.c8.csticker2==4){return this;}
+      if(this.c5.csticker2==3 && this.c5.csticker3==6 && this.c6.csticker2==3 && this.c6.csticker3==5 && this.c7.csticker2==4 && this.c7.csticker3==6
+              && this.c8.csticker2==4&&this.c8.csticker3==5){return this;}
 
-     if (Uacc==4&&this.c6.csticker2!=3){return R().U().Rp().Corners(0);}
-        else if (Uacc==4&&this.c5.csticker2!=3){return Lp().U().L().Corners(0);}
-        else if (Uacc==4&&this.c7.csticker2!=4){return L().U().Lp().Corners(0);}
-        else if (Uacc==4&&this.c8.csticker2!=4){return Rp().Up().R().Corners(0);}
+     if (Uacc==4){
+        if (this.c6.csticker2!=3||this.c6.csticker1!=1){return R().U().Rp().Corners(0);}
+        else if (this.c5.csticker2!=3||this.c5.csticker1!=1){return Lp().U().L().Corners(0);}
+        else if (this.c7.csticker2!=4||this.c7.csticker1!=1){return L().U().Lp().Corners(0);}
+        else if (this.c8.csticker2!=4||this.c8.csticker1!=1){return Rp().Up().R().Corners(0);}
+
+      }
 
 
         //Uses its own slot to solve
-      if(this.c1.csticker1==1 || this.c1.csticker2==1 || this.c1.csticker3==1){
+        if(this.c1.csticker1==1 || this.c1.csticker2==1 || this.c1.csticker3==1){
           if(this.c1.csticker1==1){
               if(this.c1.csticker2==5){return R().U().Rp().U().R().Up().Rp().Corners(0);}//
               else if (this.c1.csticker2==3){return Up().Lp().U().L().F().U2().Fp().Corners(0);}
@@ -380,14 +386,14 @@ public class Cube {
               else {return U().Rp().U().R().B().U2().Bp().Corners(0);}
           }
 
-          if(this.c1.csticker2==1){
+          else if(this.c1.csticker2==1){
               if(this.c1.csticker1==3){return R().U2().Rp().Corners(0);}
               else if (this.c1.csticker1==6){return F().Up().Fp().Corners(0);}
               else if (this.c1.csticker1==4){return Bp().Up().B().Corners(0);}
               else {return U().Rp().Up().R().Corners(0);}
           }
 
-          if(this.c1.csticker3==1){
+          else{
               if(this.c1.csticker1==5){return Fp().U2().F().Corners(0);}
               else if (this.c1.csticker1==3){return U2().Lp().U().L().Corners(0);}
               else if (this.c1.csticker1==6){return Up().Bp().U().B().Corners(0);}
@@ -396,7 +402,7 @@ public class Cube {
       }
       else {return U().Corners(Uacc + 1);}
 
-    return this;}
+    }
 
     public Cube SecondLayerEdges(int Uacc){
 
@@ -587,10 +593,12 @@ public class Cube {
 
         System.out.println(Scrambledn.isSolved());
 
-        System.out.println(Solved.RWE(0).solution);
+        System.out.println(Solved.GWE(0).solution);
 
+        Cube newer = new Cube(YG,YO,YB,YR,GO,BO,BR,GO,WB,WO,WG,WR,YGO,YGR,YBO,YBR,WBO,WBR,WGO,
+                new Corner(5,1,4),"");
 
-
+        System.out.println(newer.Corners(0).solution);
 
     }
 

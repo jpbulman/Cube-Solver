@@ -369,10 +369,10 @@ public class Cube {
               && this.c8.csticker2==4&&this.c8.csticker3==5){return this;}
 
      if (Uacc==4){
-        if (this.c6.csticker2!=3||this.c6.csticker1!=1){return R().U().Rp().Corners(0);}
-        else if (this.c5.csticker2!=3||this.c5.csticker1!=1){return Lp().U().L().Corners(0);}
+        if (this.c5.csticker2!=3||this.c5.csticker1!=1){return Lp().U().L().Corners(0);}
+        else if (this.c6.csticker2!=3||this.c6.csticker1!=1){return R().U().Rp().Corners(0);}
         else if (this.c7.csticker2!=4||this.c7.csticker1!=1){return L().U().Lp().Corners(0);}
-        else if (this.c8.csticker2!=4||this.c8.csticker1!=1){return Rp().Up().R().Corners(0);}
+        else {return Rp().Up().R().Corners(0);}
 
       }
 
@@ -396,7 +396,7 @@ public class Cube {
           else{
               if(this.c1.csticker1==5){return Fp().U2().F().Corners(0);}
               else if (this.c1.csticker1==3){return U2().Lp().U().L().Corners(0);}
-              else if (this.c1.csticker1==6){return Up().Bp().U().B().Corners(0);}
+              else if (this.c1.csticker1==6){return L().U().Lp().Corners(0);}
               else {return Rp().U().R().Corners(0);}
           }
       }
@@ -421,17 +421,17 @@ public class Cube {
                 else {return Fp().R().U().Rp().Up().Rp().F().R().SecondLayerEdges(0);}
             }
 
-            if(this.e1.esticker1==4){
+            else if(this.e1.esticker1==4){
                 if (this.e1.esticker2==6){return U2().Bp().L().U().Lp().Up().Lp().B().L().SecondLayerEdges(0);}
                 else{return U().Rp().U().R().U().Rp().U().R().Up().Rp().Up().R().SecondLayerEdges(0);}
             }
 
-            if(this.e1.esticker1==5){
+            else if(this.e1.esticker1==5){
                 if (this.e1.esticker2==3){return Up().R().Up().Rp().F().Rp().Fp().R().SecondLayerEdges(0);}
                 else {return Up().Rp().U().R().U().B().Up().Bp().SecondLayerEdges(0);}
             }
 
-            if(this.e1.esticker1==6){  //Check moves here
+            else{  
                 if(this.e1.esticker2==3){return U().Lp().U().L().U().F().Up().Fp().SecondLayerEdges(0);}
                 else {return U().L().Up().Lp().Up().Bp().U().B().SecondLayerEdges(0);}
             }
@@ -439,7 +439,7 @@ public class Cube {
         }
         else{return U().SecondLayerEdges(Uacc + 1);}
 
-    return this;}
+    }
 
     public Cube OLLedges(){
 

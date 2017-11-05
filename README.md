@@ -13,4 +13,8 @@ and/or CPU clusters have become readily available, I do not have enough computat
 This solver uses standard half-turn metric notation for solving; if you want to learn more about this, here is a helpful link:
 https://ruwix.com/the-rubiks-cube/notation/
 
+I also made a flowchart for this program, it can be viewed and/or downloaded here:
+https://drive.google.com/file/d/1XClhJgN1lTMOSPgLchYX1W3SHtLKw1Lr/view?usp=sharing
+This algorithm is able to take in any scrambled cube and produce a solved one through step by step processing.
+
 Enjoy solving! 

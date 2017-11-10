@@ -409,10 +409,25 @@ public class Cube {
         //Extreme cases?
 
         //Base case, is it solved?
+
         if(this.e5.esticker1==4 && this.e5.esticker2==6 && this.e6.esticker1==3 && this.e6.esticker2==6 && this.e7.esticker1==3
                 && this.e7.esticker2==5 && this.e8.esticker1==4 && this.e8.esticker2==5){return this;}
 
-        if(Uacc==4){return Fp().R().U().Rp().Up().Rp().F().R().SecondLayerEdges(0);}
+        if(this.e7.esticker1==5&&this.e7.esticker2==3&&this.c6.csticker1==1)return Fp().R().U().Rp().Up().Rp().F().R().SecondLayerEdges(0);
+        else if(this.e8.esticker1==5&&this.e8.esticker2==4&&this.c8.csticker1==1){return Rp().B().U().Bp().Up().Bp().R().B().SecondLayerEdges(0);}
+        else if(this.e5.esticker1==6&&this.e5.esticker2==4&&this.c7.csticker1==1){return Bp().L().U().Lp().Up().Lp().B().L().SecondLayerEdges(0);}
+        else if(this.e6.esticker1==6&&this.e6.esticker2==4&&this.c5.csticker1==1){return Lp().F().U().Fp().Up().Fp().L().F().SecondLayerEdges(0);}
+
+        /*
+        if(Uacc==4){
+            if(this.e7.esticker1==5&&this.e7.esticker2==3)return Fp().R().U().Rp().Up().Rp().F().R().SecondLayerEdges(0);
+            else if(this.e8.esticker1==5&&this.e8.esticker2==4){return Rp().B().U().Bp().Up().Bp().R().B().SecondLayerEdges(0);}
+            else if(this.e6.esticker1==6&&this.e6.esticker2==4){return Bp().L().U().Lp().Up().Lp().B().L().SecondLayerEdges(0);}
+            else {return Lp().F().U().Fp().Up().Fp().L().F().SecondLayerEdges(0);}
+        }*/
+
+        if(Uacc==4){return this;}
+
 
         if(this.e1.esticker1 != 2 && this.e1.esticker2 != 2){
 
@@ -431,7 +446,7 @@ public class Cube {
                 else {return Up().Rp().U().R().U().B().Up().Bp().SecondLayerEdges(0);}
             }
 
-            else{  
+            else{
                 if(this.e1.esticker2==3){return U().Lp().U().L().U().F().Up().Fp().SecondLayerEdges(0);}
                 else {return U().L().Up().Lp().Up().Bp().U().B().SecondLayerEdges(0);}
             }
@@ -449,7 +464,7 @@ public class Cube {
         if(this.e1.esticker1==2||this.e2.esticker1==2||this.e3.esticker1==2||this.e4.esticker1==2){
 
             if (this.e1.esticker1==2&&this.e2.esticker1==2){return F().R().U().Rp().Up().Fp().OLLedges();}
-            else if (this.e2.esticker1==2&&this.e4.esticker1==2){return F().R().U().Rp().Up().Fp();}
+            else if (this.e2.esticker1==2&&this.e4.esticker1==2){return F().R().U().Rp().Up().Fp().OLLedges();}
             else {return U().OLLedges();}
 
         }
@@ -475,8 +490,8 @@ public class Cube {
 
         if((this.c1.csticker3==this.c3.csticker3)&&(this.c2.csticker3==this.c4.csticker3)){return this;}
 
-        if (this.c1.csticker3==this.c3.csticker3 && (this.c2.csticker3 != this.c4.csticker3)){return Tperm();}
-        else if ((Math.abs(this.c1.csticker3-this.c3.csticker3)==1)&&(Math.abs(this.c2.csticker3-this.c4.csticker3)==1)){return Yperm();}
+        if (this.c1.csticker3==this.c3.csticker3 && (this.c2.csticker3 != this.c4.csticker3)){return Tperm().PLLCorners();}
+        else if ((Math.abs(this.c1.csticker3-this.c3.csticker3)==1)&&(Math.abs(this.c2.csticker3-this.c4.csticker3)==1)){return Yperm().PLLCorners();}
         else {return U().PLLCorners();}
 
     }
@@ -492,8 +507,9 @@ public class Cube {
 
         if((this.c1.csticker2==this.e1.esticker2)&&(this.e1.esticker2==this.c2.csticker2)){return Uperm1().PLLEdges(Uacc);}
         else if(((this.e3.esticker2==this.c2.csticker3)&&this.e3.esticker2==this.c4.csticker3)&&
-                ((this.e4.esticker2==this.c3.csticker2)&&this.e4.esticker2==this.c4.csticker2)){return Uperm1().Up().Uperm1();}
-        else if((Math.abs(this.e1.esticker2-this.c1.csticker2)==1)&&(Math.abs(this.e3.esticker2-this.c3.csticker2)==1)){return Uperm1().U().Uperm1();}
+                ((this.e4.esticker2==this.c3.csticker2)&&this.e4.esticker2==this.c4.csticker2)){return Uperm1().Up().Uperm1().PLLEdges(Uacc);}
+        else if((Math.abs(this.e1.esticker2-this.c1.csticker2)==1)&&(Math.abs(this.e3.esticker2-this.c3.csticker2)==1)){return Uperm1().U().Uperm1()
+                .PLLEdges(Uacc);}
         else {return U().PLLCorners();}
 
     }
@@ -591,14 +607,25 @@ public class Cube {
                 .replaceAll(" L L", " L2").replaceAll(" R R", " R2").replaceAll("'","").replaceAll(" ", "").length()
         );
 
-        System.out.println(Scrambledn.isSolved());
+        //System.out.println(Scrambledn.isSolved());
 
-        System.out.println(Solved.GWE(0).solution);
+        //System.out.println(Solved.GWE(0).solution);
 
         Cube newer = new Cube(YG,YO,YB,YR,GO,BO,BR,GO,WB,WO,WG,WR,YGO,YGR,YBO,YBR,WBO,WBR,WGO,
                 new Corner(5,1,4),"");
 
-        System.out.println(newer.Corners(0).solution);
+        Cube newer1 = new Cube(YG,YO,YB,new Edge(5,2),GO,BO,BR,new Edge(5,4),WB,WO,WG,WR,YGO,YGR,YBO,YBR,WBO,WBR,WGO,
+                WGR,"");
+
+        //System.out.println(newer.Corners(0).solution);
+
+        System.out.println(newer1.e8.esticker1);
+        System.out.println(newer1.e8.esticker2);
+
+        System.out.println(newer1.SecondLayerEdges(0).solution);
+
+        //System.out.println(newer1.U().U().e1.esticker1);
+        System.out.println(newer.SecondLayerEdges(0).solution);
 
     }
 

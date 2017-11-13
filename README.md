@@ -14,7 +14,7 @@ This solver uses standard half-turn metric notation for solving; if you want to 
 https://ruwix.com/the-rubiks-cube/notation/
 
 I also made a flowchart for this program, it can be viewed and/or downloaded here:
-https://drive.google.com/file/d/1XClhJgN1lTMOSPgLchYX1W3SHtLKw1Lr/view?usp=sharing
+https://drive.google.com/file/d/1V4ERkIpcY0_ZWzC1y0A-drk8lpb8yKcy/view?usp=sharing
 This algorithm is able to take in any scrambled cube and produce a solved one through step by step processing.
 
 Enjoy solving! 
